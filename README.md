@@ -12,13 +12,13 @@ This is a full-cycle analytics case study built around a real question: in a mar
 
 It is not a tutorial. It is not a Kaggle notebook. It is the kind of analysis a strategy or operations analyst would actually produce: data cleaning decisions documented with rationale, formulas explained and defended, findings tied to business decisions, and four distinct stakeholder perspectives built from the same underlying dataset.
 
-The project originated from a personal experience at LaGuardia Airport in December 2025 — three cancelled rides, a 43-minute wait, and a set of questions I could not stop thinking about on the flight home.
+The project originated from a personal experience at LaGuardia Airport in December 2025, three cancelled rides, a 43-minute wait, and a set of questions I could not stop thinking about on the flight home.
 
 ---
 
 ## The Dataset
 
-**Source:** NYC Taxi and Limousine Commission — High Volume For-Hire Vehicle Trip Records  
+**Source:** NYC Taxi and Limousine Commission : High Volume For-Hire Vehicle Trip Records  
 **Period:** December 2025  
 **Raw size:** ~1 million trips  
 **Analysis sample:** 98,656 trips after platform and quality filtering  
@@ -81,7 +81,7 @@ Negative take rate trips peak at fare deciles 4 through 6 ($13 to $24), not at D
 Flat congestion fees represent 8.9% of total charge for trips under 2 miles and only 1.9% for trips over 20 miles. The burden falls on short-trip riders, disproportionately lower-income Manhattan residents, not outer borough commuters.
 
 **Finding 3: TLC violations peak on long trips**  
-Uber's 5 to 10 mile segment has a 2.14% violation rate vs. 0.89% for 0 to 2 mile trips. Congested long rides generate high minimum pay obligations through the time component ($0.57/min) that fares do not always cover. Uber had 750 violations to Lyft's 5 — a 150x gap.
+Uber's 5 to 10 mile segment has a 2.14% violation rate vs. 0.89% for 0 to 2 mile trips. Congested long rides generate high minimum pay obligations through the time component ($0.57/min) that fares do not always cover. Uber had 750 violations to Lyft's 5, a 150x gap.
 
 **Finding 4: Lyft's portfolio is structurally healthier**  
 Growth quality scoring across borough x time segments: Lyft has 0% VULNERABLE segments. Uber has 45.9%. Uber Staten Island Late Night is the worst case: negative take rate, 29.7% SLA, 8.67 minute average wait.
