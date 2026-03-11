@@ -1,9 +1,0 @@
-zone,borough,opportunity_score,volume_score,sla_gap_score,take_score,tier,wav_gap
-LaGuardia Airport,Queens,100.0,95,62,88,STRONG ENTRY TARGET,1
-JFK Airport,Queens,78.6,88,58,92,STRONG ENTRY TARGET,1
-Midtown Center,Manhattan,61.2,92,41,55,MONITOR,0
-Crown Heights N,Brooklyn,58.4,48,71,68,MONITOR,0
-Mott Haven/Port Morris,Bronx,54.1,31,82,74,MONITOR,1
-East New York,Brooklyn,51.8,29,79,71,MONITOR,0
-Co-Op City,Bronx,49.3,22,84,69,MONITOR,1
-Soundview/Castle Hill,Bronx,47.6,25,81,67,MONITOR,1
