@@ -1,0 +1,11 @@
+borough,match_rate_pct,sort_order,status,trips
+1. Bronx,27.3,1,Unmet,104
+1. Bronx,27.3,1,Met,39
+2. Staten Island,50.0,2,Unmet,12
+2. Staten Island,50.0,2,Met,12
+3. Brooklyn,78.4,3,Unmet,52
+3. Brooklyn,78.4,3,Met,189
+4. Queens,81.8,4,Unmet,36
+4. Queens,81.8,4,Met,162
+5. Manhattan,83.7,5,Unmet,132
+5. Manhattan,83.7,5,Met,680

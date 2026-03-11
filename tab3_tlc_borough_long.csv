@@ -1,0 +1,13 @@
+company_name,borough,violation_rate_pct,trips
+Uber,Brooklyn,1.82,18200
+Uber,Bronx,1.51,7890
+Uber,Staten Island,0.89,2240
+Uber,Queens,0.98,22100
+Uber,Manhattan,0.61,19100
+Uber,EWR,0.41,1988
+Lyft,Brooklyn,0.04,5411
+Lyft,Bronx,0.0,1203
+Lyft,Staten Island,0.0,312
+Lyft,Queens,0.02,4892
+Lyft,Manhattan,0.01,14820
+Lyft,EWR,0.0,500

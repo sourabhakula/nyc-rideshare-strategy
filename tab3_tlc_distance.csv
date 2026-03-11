@@ -1,0 +1,6 @@
+distance_band_miles,uber_violations,lyft_violations,uber_trips,avg_shortfall_usd
+0-2,312,2,18900,3.41
+2-5,241,2,24100,4.88
+5-10,142,1,18200,6.21
+10-20,47,0,7800,8.14
+20+,8,0,2518,12.3

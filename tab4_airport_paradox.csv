@@ -1,0 +1,6 @@
+zone,tier,avg_base_fare,sla_5min_pct,sort_order
+LaGuardia Airport,STRONG,68.4,52.1,1
+JFK Airport,STRONG,74.2,51.4,2
+Midtown Center,MONITOR,24.1,67.3,3
+Crown Heights N,MONITOR,18.6,54.2,4
+Mott Haven/Port Morris,MONITOR,15.2,44.8,5

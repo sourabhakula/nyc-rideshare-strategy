@@ -1,0 +1,8 @@
+borough,time_of_day,uber_take_rate,uber_sla_pct,lyft_sla_pct,uber_violation_rate,flag
+Staten Island,Late Night,-1.79,29.71,19.15,1.21,LOSS-MAKING
+Brooklyn,AM Rush,5.91,54.2,53.1,1.82,HIGH VIOLATION
+Bronx,PM Rush,7.72,47.8,46.2,1.51,HIGH VIOLATION
+Brooklyn,Late Night,8.14,51.3,50.1,2.16,HIGH VIOLATION
+Bronx,Late Night,9.33,44.1,43.8,1.98,HIGH VIOLATION
+Queens,Early Morning,11.2,48.6,49.2,1.04,MONITOR
+Staten Island,Evening,12.41,38.9,37.4,0.89,MONITOR

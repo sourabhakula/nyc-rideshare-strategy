@@ -1,0 +1,7 @@
+zone,borough,trips,take_rate_pct,sla_5min_pct,action
+LaGuardia Airport,Queens,1180,29.46,52.1,DEFEND
+JFK Airport,Queens,890,27.32,51.4,DEFEND
+Midtown Center,Manhattan,2840,21.88,67.3,GROW
+Upper East Side N,Manhattan,1620,22.14,65.1,GROW
+Crown Heights N,Brooklyn,410,17.83,54.2,MONITOR
+Mott Haven/Port Morris,Bronx,180,13.91,44.8,INVESTIGATE
