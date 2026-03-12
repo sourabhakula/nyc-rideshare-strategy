@@ -117,7 +117,7 @@ The data README inside `data/` describes each CSV file and which Power BI tab it
 
 ## About
 
-Built by Sai Sourabh Akula, a Business Data Analyst with 5+ years of experience in fraud detection analytics at Unum. MS in Information Systems, University of North Texas.
+By  Sai Sourabh Akula, a Business Data Analyst with 5 years of experience in fraud detection analytics at Unum. MS in Information Systems, University of North Texas.
 
 This project was built to demonstrate full-cycle analytical thinking: from a real observation (a frustrating airport wait), to a structured business question, to SQL implementation, to stakeholder-specific visualization, to documented findings with business recommendations.
 
