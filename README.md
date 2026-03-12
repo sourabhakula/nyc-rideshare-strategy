@@ -104,37 +104,6 @@ Screenshots are in `dashboard/screenshots/`.
 
 ---
 
-## Repository Structure
-
-```
-nyc-rideshare-strategy/
-  README.md
-  sql/
-    00_setup_view.sql through 11_growth_quality_score.sql
-    master_documentation.sql
-  docs/
-    NYC_RideHailing_CaseStudy.docx        Full analytical document with methodology
-    NYC_RideHailing_SQL_Appendix.docx     Query-by-query technical documentation
-    NYC_RideHailing_Executive_Memo.docx   One-page stakeholder brief
-    NYC_RideHailing_Executive_Memo.pdf
-    NYC_RideHailing_SQL_Documentation.pdf
-  data/
-    tab2_borough_both_platforms.csv
-    tab2_lyft_time_fare.csv
-    tab2_lyft_zones.csv
-    tab3_tlc_borough_long.csv
-    tab3_tlc_congestion.csv
-    tab3_tlc_distance.csv
-    tab3_tlc_enforcement_table.csv
-    tab4_entrant_zones.csv
-    tab4_wav_long.csv
-    tab4_airport_paradox.csv
-  dashboard/
-    screenshots/
-```
-
----
-
 ## How to Run
 
 1. Load the TLC HVFHV December 2025 dataset into a MySQL 8.0 database named `nyc_rideshare` with the table name `trips` and the `taxi_zone_lookup` reference table.
