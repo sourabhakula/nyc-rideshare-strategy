@@ -1,124 +1,64 @@
-# Profitable Growth Under Congestion Constraints
-### A SQL and Business Intelligence Strategy Case Study for NYC Ride-Hailing
+# NYC Ride-Hailing Strategy Analysis
 
-**Sai Sourabh Akula** — Business Data Analyst  
-MySQL 8.0 · Power BI · December 2025 · 98,656 clean trips
+open the sql/ folder for all queries and dashboard/screenshots/ for the Power BI tabs.
 
----
+I got stranded at LaGuardia in December 2025. Three cancelled rides, 43 minutes 
+waiting, and I spent the whole flight home thinking about what was actually 
+happening underneath that experience. Was it a supply problem? A pricing problem? 
+A platform problem? I decided to find out.
 
-## What This Project Is
+The NYC Taxi and Limousine Commission publishes full trip-level data for every 
+HVFHV platform operating in the city under NYC Administrative Code Section 19-548. 
+Base fare, driver pay, wait times, congestion fees, GPS mileage, all of it. NYC 
+is one of the only markets in the US where this is legally required and publicly 
+available. I pulled December 2025 data, filtered down to Uber and Lyft only, 
+cleaned it to 98,656 trips, and started asking questions.
 
-This is a full-cycle analytics case study built around a real question: in a market as congested, regulated, and competitive as New York City ride-hailing, where exactly is platform margin leaking, who is bearing the cost, and what does a rational market entry look like?
+The question I kept coming back to was not who is winning. It was where is margin 
+leaking, who is bearing that cost, and what does a rational market entry actually 
+look like in a city this congested and regulated.
 
-It is not a tutorial. It is not a Kaggle notebook. It is the kind of analysis a strategy or operations analyst would actually produce: data cleaning decisions documented with rationale, formulas explained and defended, findings tied to business decisions, and four distinct stakeholder perspectives built from the same underlying dataset.
+Rather than building one generic dashboard I structured the whole thing around 
+four specific decision makers. An Uber CEO trying to understand where his platform 
+is bleeding margin. A Lyft CEO trying to understand whether her competitive edge 
+is real or fragile. An NYC TLC Commissioner trying to figure out if drivers are 
+being paid fairly and whether congestion fees are hitting the wrong people. And 
+a new market entrant trying to identify which zones are genuinely underserved 
+versus just hard.
 
-The project originated from a personal experience at LaGuardia Airport in December 2025, three cancelled rides, a 43-minute wait, and a set of questions I could not stop thinking about on the flight home.
+Each of those four perspectives got its own set of SQL queries and its own 
+Power BI dashboard tab with its own design language.
 
----
+What I found was not what I expected. Uber's margin problem is not at the bottom 
+of the fare distribution. It peaks in fare deciles 4 through 6, the $13 to $24 
+range, where the TLC minimum pay formula creates systematic underpricing because 
+trip time is high relative to distance. Decile 10 is essentially subsidizing the 
+middle. That is a structural problem, not a demand problem.
 
-## The Dataset
+Congestion fees turned out to be regressive by distance, not by borough the way 
+most people assume. A flat congestion fee represents 8.9% of total charge for 
+a trip under 2 miles and only 1.9% for a trip over 20 miles. The burden falls 
+on short trip riders who tend to be lower income Manhattan residents, not outer 
+borough commuters making long hauls.
 
-**Source:** NYC Taxi and Limousine Commission — High Volume For-Hire Vehicle Trip Records  
-**Period:** December 2025  
-**Raw size:** ~1 million trips  
-**Analysis sample:** 98,656 trips after platform and quality filtering  
-**Platforms:** HV0003 (Uber) and HV0005 (Lyft) only
+The driver pay finding was stark. Uber had 750 TLC minimum pay violations in 
+the dataset. Lyft had 5. That is a 150x gap and it concentrates in the 5 to 10 
+mile segment where congested long rides generate high minimum pay obligations 
+through the time component that fares do not always cover.
 
-The TLC mandates full trip-level disclosure from all HVFHV platforms under NYC Administrative Code Section 19 548. This includes base fare, driver pay, wait times, congestion fees, WAV accessibility flags, and GPS-tracked mileage. NYC is one of the only markets in the US where this data is legally required and publicly available.
+The airport finding is the one I keep thinking about. LaGuardia and JFK are the 
+only two zones in the full dataset that score as strong entry targets. They have 
+the highest average fares in the entire market, $63 to $76, and the worst service 
+levels, 51% to 57% on-time. Riders paying 3x the average fare are getting 15% 
+below average service. A new entrant that just shows up reliably at airports 
+captures both the revenue premium and the differentiation story at the same time.
 
----
+The SQL across this project covers window functions, CTE chains, LAG for 
+day-over-day comparisons, NTILE for decile decomposition, double joins on the 
+same lookup table for origin and destination geography, and min-max normalization 
+inside SQL for the composite opportunity scoring. 16 queries total across 4 
+analytical themes, all documented in master_documentation.sql.
 
-## Four Stakeholders, Four Dashboards
-
-Rather than building a single generic analysis, every query and every dashboard tab was designed around a specific decision-maker with a specific question.
-
-| Stakeholder | Core Question | Key Finding |
-|---|---|---|
-| Uber CEO | Where is margin leaking and is growth sustainable? | D10 generates 49.7% of all platform margin. D4 to D6 are structurally loss-making. |
-| Lyft CEO | Where is our 181bp take rate edge defensible? | 0% VULNERABLE segments vs. Uber's 45.9%. The edge is real and concentrated in Manhattan. |
-| NYC TLC Commissioner | Are drivers being paid fairly and are fees regressive? | Uber: 1.05% violation rate. Lyft: 0.02%. Congestion fees hit short-trip riders at 8.9% of total charge vs. 1.9% for long trips. |
-| New Market Entrant | Which zones are genuinely underserved? | Only 2 STRONG ENTRY TARGET zones exist: LaGuardia (score 100) and JFK (score 78.6). Riders paying 3x average fare receive 15% below-average SLA. |
-
----
-
-## SQL: 11 Queries Across 4 Analytical Themes
-
-```
-sql/
-  00_setup_view.sql           Enriched view with all derived metrics
-  01_market_position.sql      Platform scorecard with window-based market share
-  02_demand_heatmap.sql       Borough x time of day demand and SLA matrix
-  03_od_corridor_analysis.sql Origin to destination revenue corridors
-  04_take_rate_fare_decile.sql NTILE(10) margin decomposition
-  05_passenger_price_decomp.sql Fee burden breakdown by component
-  06_driver_pay_stress_test.sql TLC minimum pay compliance audit
-  07_congestion_burden.sql    Flat-fee regressivity by distance and borough
-  08_holiday_demand_stress.sql LAG-based day-over-day revenue cliff analysis
-  09_price_volatility.sql     Coefficient of variation by zone
-  10_zone_opportunity_matrix.sql Composite entry scoring across 4 dimensions
-  11_growth_quality_score.sql  Four-dimension portfolio health scoring
-  master_documentation.sql    All queries with full inline documentation
-```
-
-### SQL Techniques Demonstrated
-
-- Window functions: `RANK()`, `NTILE()`, `LAG()`, `ROW_NUMBER()`, `SUM() OVER()`
-- CTE chains for multi-step transformations
-- Aggregate vs. per-row take rate (and why the distinction matters)
-- `NULLIF` for safe division throughout
-- Double join on the same lookup table for origin and destination geography
-- Min-max normalization inside SQL for composite scoring
-- `TIMESTAMPDIFF` for wait time and trip duration from raw datetime fields
-
----
-
-## Key Findings
-
-**Finding 1: Uber's margin problem is in the middle, not the bottom**  
-Negative take rate trips peak at fare deciles 4 through 6 ($13 to $24), not at D1. The TLC minimum pay formula creates systematic underpricing in mid-range fares where trip time is high relative to distance. D10 subsidizes the rest.
-
-**Finding 2: Congestion fees are regressive by distance, not borough**  
-Flat congestion fees represent 8.9% of total charge for trips under 2 miles and only 1.9% for trips over 20 miles. The burden falls on short-trip riders, disproportionately lower-income Manhattan residents, not outer borough commuters.
-
-**Finding 3: TLC violations peak on long trips**  
-Uber's 5 to 10 mile segment has a 2.14% violation rate vs. 0.89% for 0 to 2 mile trips. Congested long rides generate high minimum pay obligations through the time component ($0.57/min) that fares do not always cover. Uber had 750 violations to Lyft's 5, a 150x gap.
-
-**Finding 4: Lyft's portfolio is structurally healthier**  
-Growth quality scoring across borough x time segments: Lyft has 0% VULNERABLE segments. Uber has 45.9%. Uber Staten Island Late Night is the worst case: negative take rate, 29.7% SLA, 8.67 minute average wait.
-
-**Finding 5: The airport entry paradox**  
-LaGuardia and JFK are the only two STRONG ENTRY TARGET zones in the full dataset. They have the highest average fares ($63 to $76) and the worst SLA (51% to 57%). A new entrant that positions on service reliability at airports can capture both the revenue premium and differentiation simultaneously.
-
----
-
-## Power BI Dashboard
-
-Four stakeholder tabs, each with its own design language and KPI focus:
-
-- **Tab 1 (Uber CEO):** Black and green. Revenue cliff line chart, margin leak table, borough take rate bars.
-- **Tab 2 (Lyft CEO):** White and magenta. Competitive heatmap, price decomposition, zone action matrix.
-- **Tab 3 (TLC Commissioner):** Navy and red. Enforcement priority table, congestion regressivity area chart, violation rate by distance.
-- **Tab 4 (New Entrant):** Dark navy and gold. Opportunity score matrix, WAV gap stacked bar, airport paradox combo chart.
-
-Screenshots are in `dashboard/screenshots/`.
-
----
-
-## How to Run
-
-1. Load the TLC HVFHV December 2025 dataset into a MySQL 8.0 database named `nyc_rideshare` with the table name `trips` and the `taxi_zone_lookup` reference table.
-2. Run `sql/00_setup_view.sql` to create the enriched view `v_trips_enriched`.
-3. Run any of `01` through `11` in any order against `v_trips_enriched`.
-4. To reproduce all findings at once, run `sql/master_documentation.sql`.
-
-The data README inside `data/` describes each CSV file and which Power BI tab it feeds.
-
----
-
-## About
-
-By  Sai Sourabh Akula, a Business Data Analyst with 5 years of experience in fraud detection analytics at Unum. MS in Information Systems, University of North Texas.
-
-This project was built to demonstrate full-cycle analytical thinking: from a real observation (a frustrating airport wait), to a structured business question, to SQL implementation, to stakeholder-specific visualization, to documented findings with business recommendations.
-
-**Contact:** github.com/sourabhakula
+dataset: NYC TLC HVFHV trip records, December 2025, 98,656 trips after cleaning
+tools: MySQL 8.0, Power BI
+github: github.com/sourabhakula/nyc-rideshare-strategy
