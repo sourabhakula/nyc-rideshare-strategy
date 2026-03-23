@@ -1,20 +1,24 @@
 # Docs
 
-Written deliverables for the NYC ride-hailing strategy project.
+These are the written deliverables for the NYC ride-hailing project.
 
-## Files
+NYC_RideHailing_CaseStudy.pdf is the full analysis. All four stakeholder 
+perspectives, Uber CEO, Lyft CEO, TLC Commissioner, and new market entrant, 
+with the actual findings, supporting data tables, and recommendations. This 
+is the main document.
 
-**NYC_RideHailing_CaseStudy.pdf**
-Full analytical case study covering all 4 stakeholder perspectives — Uber CEO, Lyft CEO, TLC Commissioner, and New Market Entrant — with findings, data tables, and strategic recommendations.
+NYC_RideHailing_Executive_Memo.pdf is the one page version. Platform scorecard, 
+top risks, entry recommendations. Written for someone who has five minutes.
 
-**NYC_RideHailing_Executive_Memo.pdf**
-One-page executive summary. The condensed version of key findings for a time-constrained reader. Includes platform scorecard, top risks, and entry recommendations.
+NYC_RideHailing_Recommendations_Memo.pdf pulls the recommendations out as a 
+standalone document. Four sections, one per stakeholder, each with specific 
+action items tied directly back to the SQL findings.
 
-**NYC_RideHailing_Recommendations_Memo.pdf**
-Standalone recommendations document. Four stakeholder sections each with specific action items grounded in the SQL findings.
+NYC_RideHailing_SQL_Appendix.pdf covers the methodology. How key metrics were 
+calculated, why the SUM based take rate method was used instead of row level, 
+and how the composite opportunity scoring model was built. Worth reading if 
+the numbers in the main case study feel like they came out of nowhere.
 
-**NYC_RideHailing_SQL_Appendix.pdf**
-Technical appendix covering analytical methodology — how key metrics were calculated, why the SUM-based take rate method was used, and how the composite scoring models were built.
-
-**NYC_RideHailing_SQL_Documentation.pdf**
-Full SQL documentation covering all 12 queries with business context, technique notes, and key findings per query.
+NYC_RideHailing_SQL_Documentation.pdf goes through all 12 queries with business 
+context, technique notes, and what each query actually found. More technical 
+than the rest.
