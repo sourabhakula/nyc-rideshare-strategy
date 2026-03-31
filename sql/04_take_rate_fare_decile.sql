@@ -1,22 +1,13 @@
--- 04_take_rate_fare_decile.sql
+-- Margin breakdown by fare decile
 -- Sai Sourabh Akula
 --
--- Margin breakdown by fare decile.
+-- Looking for where Uber's ~18% negative take rate trips are hiding.
+-- Expected short cheap rides where TLC minimum pay exceeds the fare.
+-- Wrong. Problem peaks in deciles 4-6 ($13-$24 fares). D1 is fine.
+-- Looks like a mid-range pricing algorithm gap, not a minimum pay issue.
 --
--- The question I was trying to answer: Uber has ~18% negative take rate trips.
--- Where exactly is that happening? My first guess was short cheap rides where
--- the TLC minimum pay floor pushes driver pay above what the rider paid.
---
--- I was wrong. The problem is worst in deciles 4-6 (roughly $13-$24 fares).
--- Decile 1 is actually fine. That tells you this isn't a minimum pay issue --
--- it's something in how the pricing algorithm handles mid-range trips.
---
--- NTILE(10) partitioned by platform so each platform gets its own decile bands.
--- If you don't partition, Uber's higher average fare skews the buckets and
--- the comparison becomes meaningless.
---
--- Total margin by decile is in here too. D10 alone is 49.7% of Uber's
--- monthly margin -- that's a concentration problem worth flagging.
+-- NTILE partitioned by platform so each gets its own decile bands.
+-- D10 alone accounts for 49.7% of Uber's monthly margin.
 
 USE nyc_rideshare;
 

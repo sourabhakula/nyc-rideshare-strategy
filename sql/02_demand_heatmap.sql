@@ -1,20 +1,17 @@
 -- 02_demand_heatmap.sql
 -- Sai Sourabh Akula
 --
--- Borough x time of day breakdown.
--- Trying to answer: where is each platform actually winning?
--- And more importantly, where is demand high but service bad?
+-- Borough x time-of-day breakdown. Where is each platform winning,
+-- and where is demand high but service falling apart?
 --
--- Part 1 gives the borough summary per platform.
--- Part 2 adds the time of day cut -- that's where it gets interesting.
--- Some boroughs look fine overall but fall apart in specific windows.
+-- Part 1: borough summary per platform
+-- Part 2: adds time-of-day cut with a service status flag
 --
--- FIELD() at the end just sorts time of day in chronological order
--- instead of alphabetical. Small thing but makes the output readable.
+-- FIELD() at the end sorts time of day chronologically instead of alphabetically.
 
 USE nyc_rideshare;
 
--- Borough level: one row per borough per platform
+-- Borough level
 SELECT
     'Borough Summary'                                   AS section,
     pu_borough                                          AS borough,
@@ -48,7 +45,7 @@ GROUP BY pu_borough, company_name
 ORDER BY company_name, total_trips DESC;
 
 
--- Borough x time of day: adds service status flag per segment
+-- Borough x time of day with service status flag
 SELECT
     'Borough x Time'                                    AS section,
     pu_borough                                          AS borough,
@@ -66,7 +63,7 @@ SELECT
     ROUND(AVG(request_to_pickup_min), 2)                AS avg_wait_min,
     ROUND(AVG(sla_5min_met) * 100, 2)                   AS sla_5min_pct,
 
-    -- below 50% SLA means half of riders wait more than 5 min. that's bad.
+    -- <50% SLA = half of riders waiting 5+ min
     CASE
         WHEN AVG(sla_5min_met) * 100 < 50 THEN 'UNDERSERVED'
         WHEN AVG(sla_5min_met) * 100 < 58 THEN 'AT RISK'

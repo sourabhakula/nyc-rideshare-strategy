@@ -1,21 +1,15 @@
--- 05_passenger_price_decomposition.sql
+-- Where every rider dollar goes
 -- Sai Sourabh Akula
 --
--- Breaking down where every rider dollar actually goes.
+-- Total charge = base fare + tolls + BCF + sales tax + congestion surcharge
+--              + CBD fee + airport fee + tips.
 --
--- The total charge a rider pays = base fare + tolls + BCF + sales tax
--- + congestion surcharge + CBD fee + airport fee + tips.
--- I wanted to know what percentage each piece represents.
+-- Surprise: airport_fee is only 5-7% of the airport price premium.
+-- The rest is platform pricing. JFK riders pay ~$90 more than average
+-- and almost none of that comes from the regulated surcharge.
 --
--- Part 3 is the one that surprised me most: the airport_fee (the
--- government-mandated surcharge) is only 5-7% of the airport price premium.
--- The other 93-95% is just platform pricing. Riders at JFK are paying
--- almost $90 more than a regular trip and almost none of that is regulated.
---
--- Part 2 tests whether the flat congestion fees are regressive.
--- Spoiler: not really by borough, but very much by trip distance.
--- Short trips inside Manhattan pay 8-9% of their fare in flat fees.
--- Long airport runs pay about 2%. That gap is what matters for equity.
+-- Flat congestion fees aren't regressive by borough, but they are by distance.
+-- Short Manhattan trips pay 8-9% of fare in flat fees. Long airport runs ~2%.
 
 USE nyc_rideshare;
 
@@ -66,8 +60,7 @@ GROUP BY company_name
 ORDER BY company_name;
 
 
--- Congestion fee burden by borough
--- testing whether outer borough riders pay a higher share in flat fees
+-- Do outer borough riders pay a higher share in flat fees?
 SELECT
     'Borough Fee Burden'                                AS section,
     pu_borough                                          AS borough,
@@ -92,8 +85,7 @@ GROUP BY pu_borough, company_name
 ORDER BY pu_borough, company_name;
 
 
--- Airport fee as % of total airport charge
--- how much of the airport premium is actually the regulated fee vs platform markup?
+-- How much of the airport premium is the regulated fee vs platform markup?
 SELECT
     'Airport Fee Structure'                             AS section,
     company_name,

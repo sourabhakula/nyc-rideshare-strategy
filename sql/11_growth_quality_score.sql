@@ -1,29 +1,14 @@
 -- 11_growth_quality_score.sql
 -- Sai Sourabh Akula
 --
--- The closing argument. All 11 queries synthesized into a single
--- verdict per segment (platform x borough x time of day).
+-- Single quality verdict per segment (platform x borough x time of day).
+-- Four dimensions, 25 pts each: margin, service, compliance, price stability.
+-- Margin uses both aggregate take rate AND % of trips losing money,
+-- since a few big trips can mask widespread negative margins.
 --
--- Four dimensions, 25 points each:
---   Margin health    -- take rate + % of trips with negative take rate
---   Service quality  -- SLA % + average wait time
---   Driver compliance -- TLC violation rate
---   Price stability  -- coefficient of variation on base fare
---
--- The joint condition on margin matters. A segment can look fine on
--- aggregate take rate if a few big trips prop up the average -- but still
--- have 30% of individual trips losing money. I score on both simultaneously.
---
--- Results:
---   Lyft: 0 vulnerable segments, 63% of trips in SOLID segments
---   Uber: 13 vulnerable segments covering 46% of December trip volume
---
--- Worst single segment: Uber Brooklyn Late Night -- score of 25.
--- 20.76% negative take rate, 2.61% TLC violation rate, 53% SLA.
--- All three dimensions failing at once.
---
--- Uber's only SOLID segment: Manhattan Midday at 65.
--- One solid segment out of the whole portfolio.
+-- Lyft: 0 vulnerable segments, 63% of trips in SOLID segments.
+-- Uber: 13 vulnerable segments covering 46% of December volume.
+-- Worst: Uber Brooklyn Late Night, score 25.
 
 USE nyc_rideshare;
 
@@ -62,7 +47,7 @@ scored AS (
     SELECT
         *,
 
-        -- Margin health (0-25)
+        -- margin health (0-25)
         CASE
             WHEN avg_take_rate_pct >= 20
                  AND negative_take_rate_pct < 5  THEN 25
@@ -75,7 +60,7 @@ scored AS (
             ELSE                                      0
         END                                             AS margin_score,
 
-        -- Service quality (0-25)
+        -- service quality (0-25)
         CASE
             WHEN sla_pct >= 65 AND avg_wait_min <= 4.5 THEN 25
             WHEN sla_pct >= 60 AND avg_wait_min <= 5.0 THEN 20
@@ -85,7 +70,7 @@ scored AS (
             ELSE                                            0
         END                                             AS service_score,
 
-        -- Driver compliance (0-25)
+        -- driver compliance (0-25)
         CASE
             WHEN violation_pct = 0                     THEN 25
             WHEN violation_pct < 0.25                  THEN 20
@@ -95,7 +80,7 @@ scored AS (
             ELSE                                            0
         END                                             AS compliance_score,
 
-        -- Price stability (0-25)
+        -- price stability (0-25)
         CASE
             WHEN price_volatility_pct < 30             THEN 25
             WHEN price_volatility_pct < 45             THEN 20
@@ -129,7 +114,7 @@ final_scored AS (
     FROM scored
 )
 
--- Full segment quality ranking
+-- full segment quality ranking
 SELECT
     'Growth Quality Score'                              AS section,
     company_name,
@@ -163,7 +148,7 @@ FROM final_scored
 ORDER BY growth_quality_score DESC;
 
 
--- Platform summary: how do Uber and Lyft compare overall on quality?
+-- platform summary
 SELECT
     'Platform Quality Summary'                          AS section,
     company_name,

@@ -1,20 +1,15 @@
 -- 03_od_corridor_analysis.sql
 -- Sai Sourabh Akula
 --
--- Where does the money actually flow? Which pickup-dropoff pairs
--- are the most valuable, and how do airport routes compare to everything else?
+-- Which pickup-dropoff pairs carry the most volume and revenue?
+-- How do airport routes compare to everything else?
 --
--- Three parts:
---   Part 1: top 20 zone-level corridors by trip volume
---   Part 2: airport vs non-airport split (this is where the pricing story gets interesting)
---   Part 3: borough-to-borough matrix -- the big picture view
+-- Part 1: top 20 zone-level corridors (min 50 trips per corridor)
+-- Part 2: airport vs non-airport split
+-- Part 3: borough-to-borough flow matrix
 --
--- Minimum 50 trips per corridor for Part 1.
--- Below that, the averages aren't reliable enough to mean anything.
---
--- airport_fee > 0 is the right proxy for airport trips.
--- There's no dedicated airport flag in the raw data -- I validated this
--- by cross-checking with zone names and it holds up cleanly.
+-- airport_fee > 0 is the proxy for airport trips. No dedicated flag
+-- in the raw data; validated by cross-checking zone names.
 
 USE nyc_rideshare;
 
@@ -52,8 +47,7 @@ ORDER BY total_trips DESC
 LIMIT 20;
 
 
--- Airport vs non-airport comparison
--- The fare gap here is one of the biggest findings in the whole project
+-- Airport vs non-airport
 SELECT
     'Airport Segment'                                   AS section,
     company_name,
@@ -80,7 +74,7 @@ GROUP BY company_name, is_airport_trip
 ORDER BY company_name, is_airport_trip DESC;
 
 
--- Borough-to-borough revenue flow matrix
+-- Borough-to-borough revenue flow
 SELECT
     'Borough Matrix'                                    AS section,
     pu_borough                                          AS origin,

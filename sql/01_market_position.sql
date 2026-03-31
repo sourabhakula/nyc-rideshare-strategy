@@ -1,18 +1,12 @@
 -- 01_market_position.sql
 -- Sai Sourabh Akula
 --
--- Platform scorecard. I run this first every time -- it sets
--- the baseline numbers that everything else gets compared against.
+-- Platform scorecard. One row per platform, ~20 KPIs covering
+-- volume, fares, driver pay, take rate, SLA, wait time, compliance.
 --
--- One row per platform, about 20 KPIs: volume, fares, driver pay,
--- take rate, SLA, wait time, compliance.
---
--- Take rate note: using SUM-based aggregate method here, not AVG of
--- per-trip rates. Averaging individual rates gives a distorted number
--- when there are outliers. The correct approach is:
---   (total base fare collected - total driver pay) / total base fare
--- Tested both methods on Uber Bronx -- SUM gave 11.01%, AVG gave 14.21%.
--- That 3-point gap changes how you read the whole margin story.
+-- Take rate uses SUM-based aggregate, not AVG of per-trip rates.
+-- Tested both on Uber Bronx: SUM gave 11.01%, AVG gave 14.21%.
+-- That 3pt gap changes the whole margin story.
 
 USE nyc_rideshare;
 
@@ -35,7 +29,7 @@ SELECT
     , 2)                                                AS avg_take_rate_pct,
     ROUND(AVG(platform_spread), 2)                      AS avg_platform_spread,
 
-    -- how many trips are actually costing the platform money
+    -- trips where the platform loses money
     ROUND(
         SUM(CASE WHEN take_rate_pct < 0 THEN 1 ELSE 0 END)
         * 100.0 / COUNT(*)
@@ -48,7 +42,6 @@ SELECT
     ROUND(AVG(request_to_pickup_min), 2)                AS avg_wait_min,
     ROUND(AVG(sla_5min_met) * 100, 2)                   AS sla_5min_pct,
 
-    -- using 1.0/0.0 to avoid integer division rounding in MySQL
     ROUND(
         AVG(CASE WHEN below_tlc_minimum = 1 THEN 1.0 ELSE 0.0 END) * 100
     , 2)                                                AS below_tlc_min_pct,

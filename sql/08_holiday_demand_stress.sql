@@ -1,27 +1,14 @@
 -- 08_holiday_demand_stress.sql
 -- Sai Sourabh Akula
 --
--- Revenue volatility through December.
---
--- December is the most analytically interesting month in this dataset
--- because you get a pre-holiday surge, a Christmas cliff, and a recovery
--- all within 31 days. I wanted to quantify how deep that cliff actually is
--- and whether the two platforms behave differently during it.
---
--- Uber peaked Dec 11 ($89k), troughed Dec 26 ($39k) -- that's a 56% drop.
--- Lyft peaked Dec 12 ($28k), troughed Dec 25 ($15k) -- 45% drop.
--- Different trough dates: Uber hits bottom Dec 26, Lyft hits bottom Dec 25.
--- That suggests different rider profiles -- Lyft riders cancel on Christmas Day
--- itself, Uber's business-ish base partially resumes Dec 26.
---
--- Window functions used here:
---   LAG()          -- previous day revenue for day-over-day % change
---   AVG() with ROWS BETWEEN 6 PRECEDING -- 7-day rolling average
---   SUM() with ROWS UNBOUNDED PRECEDING  -- cumulative month-to-date
---   RANK()         -- which day was the peak (1 = highest)
+-- December revenue volatility: pre-holiday surge, Christmas cliff, recovery.
+-- Uber peaked Dec 11 ($89k), troughed Dec 26 ($39k) = 56% drop.
+-- Lyft peaked Dec 12 ($28k), troughed Dec 25 ($15k) = 45% drop.
+-- Different trough dates hint at different rider profiles.
 
 USE nyc_rideshare;
 
+-- daily revenue by platform with rolling averages and cumulative totals
 WITH daily_revenue AS (
     SELECT
         trip_date,
@@ -119,7 +106,7 @@ FROM daily_with_lag
 ORDER BY company_name, trip_date;
 
 
--- Peak vs trough summary -- the cliff in one number per platform
+-- peak vs trough summary per platform
 WITH daily_revenue AS (
     SELECT
         trip_date,

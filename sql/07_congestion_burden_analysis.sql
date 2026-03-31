@@ -1,31 +1,20 @@
--- 07_congestion_burden_analysis.sql
+-- Congestion fee burden analysis
 -- Sai Sourabh Akula
 --
--- Congestion fee analysis. This is central to the whole project --
--- it's literally in the title.
+-- Two fees in the data:
+--   congestion_surcharge = state fee since 2019, trips in/through Manhattan <96th St
+--   cbd_congestion_fee   = MTA CBD fee since Jan 5 2025, trips into Manhattan <60th St
 --
--- Two separate fees in the data:
---   congestion_surcharge  = state fee, exists since 2019, trips in/through
---                           Manhattan below 96th St
---   cbd_congestion_fee    = new MTA Central Business District fee,
---                           effective Jan 5 2025, trips into Manhattan
---                           below 60th St
+-- Kept separate in the view (different legal footprints), combined here for burden calc.
 --
--- I kept them separate in the view because they have different legal
--- histories and footprints. Combined them here for the burden calc
--- since what matters for equity analysis is the total rider impact.
---
--- The main finding: the regressivity isn't geographic, it's by trip length.
--- Outer boroughs have low burden because their trips don't touch the zones.
--- Manhattan bears ~85% of total congestion fee incidence -- but that's
--- geographic alignment, not unfair targeting.
--- The unfairness is: sub-1-mile trips pay 8-9% of their fare in flat fees.
--- 10+ mile trips pay about 2%. A flat fee on a $10 ride hits different
--- than a flat fee on an $80 airport run.
+-- Regressivity is by trip length, not geography.
+-- Manhattan carries ~85% of total fee incidence, but that's just zone alignment.
+-- The real inequity: sub-1-mile trips pay 8-9% of fare in flat fees.
+-- 10+ mile trips pay ~2%. Same flat fee on a $10 ride vs an $80 airport run.
 
 USE nyc_rideshare;
 
--- Congestion burden by borough
+-- Burden by borough
 SELECT
     'Borough Congestion Burden'                         AS section,
     pu_borough                                          AS borough,
@@ -69,7 +58,7 @@ GROUP BY pu_borough, company_name
 ORDER BY congestion_burden_pct DESC;
 
 
--- Burden by trip distance -- this is where the regressivity actually shows up
+-- Burden by trip distance (where regressivity actually shows up)
 SELECT
     'Distance Band Burden'                              AS section,
     company_name,
@@ -98,7 +87,7 @@ ORDER BY company_name,
         '3 to 5 miles','5 to 10 miles','10 plus miles');
 
 
--- Which specific zones are generating the most CBD fees?
+-- Top 20 zones by CBD fee volume
 SELECT
     'CBD Zone Footprint'                                AS section,
     pu_borough                                          AS borough,

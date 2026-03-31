@@ -1,27 +1,21 @@
--- 06_driver_pay_stress_test.sql
+-- TLC minimum pay compliance check
 -- Sai Sourabh Akula
 --
--- TLC minimum pay compliance check.
--- Formula: $0.82/mile + $0.57/min
--- The below_tlc_minimum flag is already set in the view, so this is
--- mostly aggregation work.
+-- Formula: $0.82/mile + $0.57/min. below_tlc_minimum flag set in the view.
 --
--- Uber came in at 1.05% violation rate, Lyft at 0.02%.
--- That's 750 vs 5 trips. 52:1 ratio isn't explained by volume alone --
--- Uber does 2.6x more trips but 150x more violations.
+-- Uber: 1.05% violation rate (750 trips). Lyft: 0.02% (5 trips).
+-- 52:1 ratio not explained by volume alone (Uber does 2.6x more trips).
 --
--- The counterintuitive part: violations are worst on LONG trips, not short ones.
--- I expected the opposite. The mechanism is the time component of the formula --
--- a 60-minute trip in slow traffic generates $34+ in minimum pay just from time.
--- If the fare was set before traffic conditions materialized, it won't cover that.
+-- Violations are worst on long trips, not short ones. The time component
+-- drives it: a 60-min trip in traffic racks up $34+ in minimum pay from
+-- time alone. If the fare was locked before traffic hit, it can't cover that.
 --
--- Avg shortfall on Uber violations is $5.11.
--- 750 violations x $5.11 = ~$3,832 in underpaid driver earnings in one month.
--- Small absolute number but completely preventable.
+-- Avg shortfall per Uber violation: $5.11. ~$3,832/month total.
+-- Small but completely preventable.
 
 USE nyc_rideshare;
 
--- Platform level compliance overview
+-- Platform-level overview
 SELECT
     'Platform Summary'                                  AS section,
     company_name,
@@ -49,7 +43,7 @@ GROUP BY company_name
 ORDER BY violation_pct DESC;
 
 
--- Violation rate by borough
+-- By borough
 SELECT
     'Borough Breakdown'                                 AS section,
     company_name,
@@ -74,7 +68,7 @@ GROUP BY company_name, pu_borough
 ORDER BY company_name, violation_pct DESC;
 
 
--- Violation rate by time of day
+-- By time of day
 SELECT
     'Time of Day Breakdown'                             AS section,
     company_name,
@@ -92,8 +86,7 @@ GROUP BY company_name, time_of_day
 ORDER BY company_name, violation_pct DESC;
 
 
--- Violation rate by trip distance band
--- this is the finding that flipped my original hypothesis
+-- By distance band (flipped my original hypothesis)
 SELECT
     'Short Trip Analysis'                               AS section,
     company_name,

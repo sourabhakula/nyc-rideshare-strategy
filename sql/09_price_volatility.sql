@@ -1,24 +1,15 @@
 -- 09_price_volatility.sql
 -- Sai Sourabh Akula
 --
--- Fare variance by zone and borough.
+-- Fare variance by zone and borough using coefficient of variation.
+-- CV (stddev/mean) normalizes across price levels so low-fare and
+-- high-fare zones are comparable. Min 30 trips to filter out noise.
 --
--- Using coefficient of variation (stddev / mean * 100) rather than raw stddev.
--- The reason: zones with high average fares will always show bigger stddev
--- just from scale. CV normalizes for that so you can actually compare
--- volatility across zones with very different price levels.
---
--- Minimum 30 trips per zone. Below that, one unusual trip (like a long
--- airport run through a normally short-trip zone) can make the CV look
--- massive when it's really just noise.
---
--- Part 3 isolates Late Night specifically because that's when supply is
--- tightest and surge conditions are most likely. Confirmed worst performer:
--- Staten Island Late Night -- 38% fare premium with 19% SLA for Lyft.
--- That's a broken market.
+-- Staten Island Late Night stood out: 38% fare premium, 19% SLA for Lyft.
 
 USE nyc_rideshare;
 
+-- zone-level fare volatility with entry signals
 WITH zone_stats AS (
     SELECT
         pu_borough                                      AS borough,
@@ -70,7 +61,7 @@ SELECT
         ELSE                                   'STABLE'
     END                                                 AS volatility_class,
 
-    -- entry signal: stable pricing + decent volume + incumbent underperforming
+    -- stable pricing + decent volume + weak SLA = opportunity
     CASE
         WHEN coeff_of_variation_pct < 35
              AND total_trips >= 100
@@ -87,7 +78,7 @@ ORDER BY coeff_of_variation_pct DESC
 LIMIT 40;
 
 
--- Borough-level volatility
+-- borough-level volatility
 SELECT
     'Borough Volatility'                                AS section,
     pu_borough                                          AS borough,
@@ -107,7 +98,7 @@ GROUP BY pu_borough, company_name
 ORDER BY coeff_of_variation_pct DESC;
 
 
--- Late Night specifically -- the highest stress window
+-- late night only, where supply is thinnest
 SELECT
     'Late Night Volatility'                             AS section,
     pu_borough                                          AS borough,
