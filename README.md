@@ -62,3 +62,7 @@ analytical themes, all documented in master_documentation.sql.
 dataset: NYC TLC HVFHV trip records, December 2025, 98,656 trips after cleaning
 tools: MySQL 8.0, Power BI
 github: github.com/sourabhakula/nyc-rideshare-strategy
+
+---
+
+**A note on AI use:** I used AI tools in a limited way during early exploration, mainly to build context around NYC ride-hailing regulations and market structure. All SQL queries, dashboard design, data cleaning, and analytical conclusions in this project are entirely my own work.
