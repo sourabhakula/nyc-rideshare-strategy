@@ -3,7 +3,6 @@
 --
 -- Borough x time-of-day breakdown. Where is each platform winning,
 -- and where is demand high but service falling apart?
---
 -- Part 1: borough summary per platform
 -- Part 2: adds time-of-day cut with a service status flag
 --
