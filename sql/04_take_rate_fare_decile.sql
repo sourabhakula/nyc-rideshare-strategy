@@ -1,6 +1,5 @@
 -- Margin breakdown by fare decile
 -- Sai Sourabh Akula
---
 -- Looking for where Uber's ~18% negative take rate trips are hiding.
 -- Expected short cheap rides where TLC minimum pay exceeds the fare.
 -- Wrong. Problem peaks in deciles 4-6 ($13-$24 fares). D1 is fine.
