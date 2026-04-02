@@ -1,6 +1,5 @@
 -- Where every rider dollar goes
 -- Sai Sourabh Akula
---
 -- Total charge = base fare + tolls + BCF + sales tax + congestion surcharge
 --              + CBD fee + airport fee + tips.
 --
