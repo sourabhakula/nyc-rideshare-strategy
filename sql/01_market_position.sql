@@ -1,6 +1,5 @@
 -- 01_market_position.sql
 -- Sai Sourabh Akula
---
 -- Platform scorecard. One row per platform, ~20 KPIs covering
 -- volume, fares, driver pay, take rate, SLA, wait time, compliance.
 --
