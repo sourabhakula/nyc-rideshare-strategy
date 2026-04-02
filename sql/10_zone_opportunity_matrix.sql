@@ -1,6 +1,5 @@
 -- 10_zone_opportunity_matrix.sql
 -- Sai Sourabh Akula
---
 -- Composite opportunity score for a new entrant: which zones first?
 -- Weighted: volume 30%, fare 25%, SLA gap 30%, wait gap 15%.
 -- Min-max normalized so different units combine cleanly.
