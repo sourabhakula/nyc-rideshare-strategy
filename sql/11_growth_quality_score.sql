@@ -1,6 +1,5 @@
 -- 11_growth_quality_score.sql
 -- Sai Sourabh Akula
---
 -- Single quality verdict per segment (platform x borough x time of day).
 -- Four dimensions, 25 pts each: margin, service, compliance, price stability.
 -- Margin uses both aggregate take rate AND % of trips losing money,
