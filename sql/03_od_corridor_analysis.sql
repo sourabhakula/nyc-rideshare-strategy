@@ -1,6 +1,5 @@
 -- 03_od_corridor_analysis.sql
 -- Sai Sourabh Akula
---
 -- Which pickup-dropoff pairs carry the most volume and revenue?
 -- How do airport routes compare to everything else?
 --
