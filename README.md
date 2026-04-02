@@ -65,4 +65,4 @@ github: github.com/sourabhakula/nyc-rideshare-strategy
 
 ---
 
-**A note on AI use:** I used AI tools in a limited way during early exploration, mainly to build context around NYC ride-hailing regulations and market structure. 
+**A note on AI use:** I used AI tools during early exploration, mainly to build context around NYC ride-hailing regulations and market structure. 
