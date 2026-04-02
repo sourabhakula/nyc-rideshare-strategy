@@ -1,6 +1,5 @@
 -- Congestion fee burden analysis
 -- Sai Sourabh Akula
---
 -- Two fees in the data:
 --   congestion_surcharge = state fee since 2019, trips in/through Manhattan <96th St
 --   cbd_congestion_fee   = MTA CBD fee since Jan 5 2025, trips into Manhattan <60th St
