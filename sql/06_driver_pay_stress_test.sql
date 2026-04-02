@@ -1,6 +1,5 @@
 -- TLC minimum pay compliance check
 -- Sai Sourabh Akula
---
 -- Formula: $0.82/mile + $0.57/min. below_tlc_minimum flag set in the view.
 --
 -- Uber: 1.05% violation rate (750 trips). Lyft: 0.02% (5 trips).
