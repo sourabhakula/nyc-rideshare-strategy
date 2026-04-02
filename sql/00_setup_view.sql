@@ -5,7 +5,7 @@
 -- Derived columns (fare totals, wait time, SLA, TLC min pay) live here
 -- so the logic only gets written once.
 --
--- Gotchas:
+
 --   trip_time is in SECONDS. Divided by 60 everywhere.
 --   originating_base_num is NULL on every row. Left it out.
 --   Wait time filter: negative or >7200s rows are bad data.
