@@ -1,6 +1,5 @@
 -- 08_holiday_demand_stress.sql
 -- Sai Sourabh Akula
---
 -- December revenue volatility: pre-holiday surge, Christmas cliff, recovery.
 -- Uber peaked Dec 11 ($89k), troughed Dec 26 ($39k) = 56% drop.
 -- Lyft peaked Dec 12 ($28k), troughed Dec 25 ($15k) = 45% drop.
