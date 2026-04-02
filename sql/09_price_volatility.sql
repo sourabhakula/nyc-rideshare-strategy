@@ -1,6 +1,5 @@
 -- 09_price_volatility.sql
 -- Sai Sourabh Akula
---
 -- Fare variance by zone and borough using coefficient of variation.
 -- CV (stddev/mean) normalizes across price levels so low-fare and
 -- high-fare zones are comparable. Min 30 trips to filter out noise.
